@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=1024, user-scalable=no">
+
+	<title>CSS Transitions</title>
+
+	<!-- Required stylesheet -->
+	<link rel="stylesheet" href="core/deck.core.css">
+	
+	<!-- Extension CSS files go here. Remove or add as needed. -->
+	<link rel="stylesheet" href="extensions/goto/deck.goto.css">
+	<link rel="stylesheet" href="extensions/menu/deck.menu.css">
+	<link rel="stylesheet" href="extensions/navigation/deck.navigation.css">
+	<link rel="stylesheet" href="extensions/status/deck.status.css">
+	<link rel="stylesheet" href="extensions/hash/deck.hash.css">
+	<link rel="stylesheet" href="extensions/scale/deck.scale.css">
+
+	<!-- Style theme. More available in /themes/style/ or create your own. -->
+	<link rel="stylesheet" href="themes/style/swiss.css">
+	<style>
+		.slide p.alone {
+			text-align: center;
+			margin-top: 5em;
+			margin-bottom: 5em;
+		}
+		.slide .button {
+			border: 1px solid #888;
+			border-radius: 5px;
+			padding: 5px 15px;
+			background-color: #eee;
+			font-size: larger;
+			font-weight: bold;
+			box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+		}
+			.slide .button:active {
+				background-color: #ccc;
+			}
+		.slide dfn {
+			font-weight: bold;
+		}
+		.slide dfn:after {
+				font-weight: normal;
+				color: #888;
+				content: " —";
+		}
+		.slide .definition {
+			text-align: center;
+			font-size: larger;
+		}
+		.slide iframe {
+			margin-bottom: 0;
+			margin-top: 1.5em;
+		}
+		.slide iframe + a.example {
+			font-size: 0.5em;
+		}
+
+		.slide ul ul {
+			margin-bottom: 0;
+		}
+
+		.slide dl {
+			margin-bottom: 1em;
+		}
+		.slide dt {
+			padding-top: .25em;
+		}
+		.slide dd {
+			padding-bottom: .25em;
+		}
+	</style>
+	
+	<!-- Transition theme. More available in /themes/transition/ or create your own. -->
+	<link rel="stylesheet" href="themes/transition/horizontal-slide.css">
+	
+	<!-- Required Modernizr file -->
+	<script src="modernizr.custom.js"></script>
+</head>
+<body id="css-transitions-presentation" class="deck-container">
+
+<!-- Begin slides. Just make elements with a class of slide. -->
+
+<section class="slide">
+	<h1>CSS Transitions</h1>
+</section>
+
+<section class="slide">
+	<h2>What are CSS transitions?</h2>
+	<p>
+		Without transitions, when new CSS selectors match an element, any changed styles are applied immediately.
+	</p>
+	<p>
+		With transitions you can control this behavior and make styles gradually change over time with tweening.
+	</p>
+
+	<p class="alone"><a class="button" href="http://jsfiddle.net/mkantor/6qyqK/">Demo</a></p>
+
+	<!--
+		<p>For example: when you change class names with JavaScript, use :hover styles, etc.</p>
+		<p>Does everyone know what "tweening" is?</p>
+	-->
+</section>
+
+<section class="slide">
+	<h2>How does it work?</h2>
+
+	<h3>CSS properties used to control transitions</h3>
+	<dl>
+		<dt><code>transition-property</code></dt>
+		<dd>The property or list of properties you want to transition (e.g. <code>transition-property: height, width, font-size;</code>). Also supports <code>all</code> (which is the default).</dd>
+
+		<dt><code>transition-duration</code></dt>
+		<dd>How long the animation should take.</dd>
+
+		<dt><code>transition-timing-function</code></dt>
+		<dd>How easing should work (value is a <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/timing-function?redirectlocale=en-US&redirectslug=CSS%2Ftiming-function">timing function</a>).</dd>
+
+		<dt><code>transition-delay</code></dt>
+		<dd>How long to delay the start of the transition.</dd>
+	</dl>
+
+	<a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_transitions#CSS_properties_used_to_define_transitions">Examples</a>
+
+	<!--
+		<p>transition-timing-function is usually something you don't need to change.</p>
+		<p>I don't think I've ever used transition-delay either.</p>
+	-->
+</section>
+
+<section class="slide">
+	<h2>Shorthand syntax</h2>
+
+	<ul>
+		<li><code>transition: [property] [duration] [timing-function] [delay];</code></li>
+		<li><code>transition: width 2s;</code></li>
+		<li><code>transition: font-size 0.5s, color 5s;</code></li>
+		<li><code>transition: all 500ms;</code></li>
+		<li><code>transition: margin-top 1s ease-in 2s;</code></li>
+	</ul>
+</section>
+
+<section class="slide">
+	<h2>What properties can be animated?</h2>
+
+	<p>
+		According to the spec, pretty much anything that could possibly make sense.
+	</p>
+	<p>
+		<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties">The full list</a>.
+	</p>
+</section>
+
+<section class="slide">
+	<h2>Browser support</h2>
+
+	<p><a href="http://caniuse.com/css-transitions">IE10+ and everything else</a>.</p>
+
+	<p>
+		Not all browsers implement tweening for all properties yet (for example, WebKit doesn't support transitioning font-weight). Most "common" things have good support.
+	</p>
+
+	<p>
+		<strong>But</strong> by their nature CSS transitions will gracefully degrade.
+	</p>
+</section>
+
+<section class="slide">
+	<h2>CSS transitions vs JavaScript animations</h2>
+
+	<h3>CSS transitions</h3>
+	<ul>
+		<li>simple to write</li>
+		<li>
+			lightweight (resource-wise)
+			<ul>
+				<li>browser is in control of the animation, so it can choose to drop frames based on available resources or battery life, or even skip the animation entirely if it happens in a background tab</li>
+			</ul>
+		</li>
+		<li>
+			gracefully degrade
+			<ul>
+				<li>if a browser doesn't support an animation, it will just fall back to "snapping" styles into place like normal</li>
+			</ul>
+		</li>
+	</ul>
+
+	<h3>JS animations</h3>
+	<ul>
+		<li>easier to build more complex, behavior-driven animations</li>
+		<li>will work across more browsers (depending on how you write the JavaScript)</li>
+	</ul>
+
+	<p>Ask yourself: <strong>Is this animation <em>presentation</em> or <em>behavior</em>?</strong></p>
+
+	<p>You can easily create a <a href="http://jsfiddle.net/mkantor/NJgmk/">hybrid solution</a>.</p>
+</section>
+
+<section class="slide">
+	<h2>CSS @keyframes</h2>
+
+	<ul>
+		<li>an entirely different way of creating animations</li>
+		<li>gives you more control over animations
+			<ul>
+				<li>multiple steps</li>
+				<li>looping behavior</li>
+				<li>other fancy things</li>
+			</ul>
+		</li>
+	</ul>
+
+	<h3>Downsides</h3>
+	<ul>
+		<li>much more complex to build than transitions</li>
+		<li>browser support is not as good</li>
+		<li>you don't really get graceful degradation by default</li>
+	</ul>
+
+	<p>
+		My recommendation: <strong>don't worry about @keyframes unless there's something you can't accomplish with transitions alone</strong>.
+	</p>
+
+	<p>
+		"CSS animations" may refer to both ways of creating animations, so when Googling use "css transitions" or "css keyframe animations" to make sure you find what you want.
+	</p>
+
+	<!-- Just want to briefly mention this since you will come across it. -->
+</section>
+
+<section class="slide">
+	<h2>Hands-on demo</h2>
+	<p class="alone"><a class="button" href="http://jsfiddle.net/mkantor/8ujht">http://jsfiddle.net/mkantor/8ujht</a></p>
+</section>
+
+<!-- End slides. -->
+
+
+<!-- Begin extension snippets. Add or remove as needed. -->
+
+<!-- deck.navigation snippet -->
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<!-- deck.status snippet -->
+<p class="deck-status">
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+</p>
+
+<!-- deck.goto snippet -->
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+	<datalist id="goto-datalist"></datalist>
+	<input type="submit" value="Go">
+</form>
+
+<!-- deck.hash snippet -->
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+<!-- End extension snippets. -->
+
+
+<!-- Required JS files. -->
+<script src="jquery-1.7.2.min.js"></script>
+<script src="core/deck.core.js"></script>
+
+<!-- Extension JS files. Add or remove as needed. -->
+<script src="core/deck.core.js"></script>
+<script src="extensions/hash/deck.hash.js"></script>
+<script src="extensions/menu/deck.menu.js"></script>
+<script src="extensions/goto/deck.goto.js"></script>
+<script src="extensions/status/deck.status.js"></script>
+<script src="extensions/navigation/deck.navigation.js"></script>
+<script src="extensions/scale/deck.scale.js"></script>
+<script src="extensions/presenterview/deck.presenterview.js"></script>
+
+<!-- Initialize the deck. You can put this in an external file if desired. -->
+<script>
+	$(function() {
+		$.deck('.slide');
+	});
+</script>
+</body>
+</html>
